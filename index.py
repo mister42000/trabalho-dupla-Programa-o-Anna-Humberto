@@ -2,9 +2,7 @@ import random
 import time
 
 
-# =========================
 # CONFIGURAÇÕES
-# =========================
 
 MAX_VIDA = 100
 MAX_FOME = 100
@@ -12,9 +10,7 @@ MAX_SEDE = 100
 MAX_SONO = 100
 
 
-# =========================
 # JOGADOR
-# =========================
 
 class Jogador:
 
@@ -34,9 +30,7 @@ class Jogador:
             "pedra": 0
         }
 
-    # -------------------------
     # STATUS
-    # -------------------------
 
     def mostrar_status(self):
 
@@ -44,21 +38,19 @@ class Jogador:
         print(f"DIA {self.dia} | {self.hora:02d}:00")
         print("=" * 40)
 
-        print(f"❤️ Vida:  {self.vida}/100")
-        print(f"🍖 Fome:  {self.fome}/100")
-        print(f"💧 Sede:  {self.sede}/100")
-        print(f"😴 Sono:  {self.sono}/100")
+        print(f" Vida:  {self.vida}/100")
+        print(f" Fome:  {self.fome}/100")
+        print(f" Sede:  {self.sede}/100")
+        print(f" Sono:  {self.sono}/100")
 
-        print("\n🎒 Inventário:")
+        print("\n Inventário:")
 
         for item, quantidade in self.inventario.items():
             print(f"  {item}: {quantidade}")
 
         print("=" * 40)
 
-    # -------------------------
     # PASSAGEM DE TEMPO
-    # -------------------------
 
     def passar_tempo(self, horas=1):
 
@@ -77,9 +69,7 @@ class Jogador:
 
         self.verificar_estado()
 
-    # -------------------------
     # ESTADO DO JOGADOR
-    # -------------------------
 
     def verificar_estado(self):
 
@@ -89,23 +79,21 @@ class Jogador:
 
         if self.fome == 0:
             self.vida -= 5
-            print("🍖 Você está morrendo de fome!")
+            print(" Você está morrendo de fome!")
 
         if self.sede == 0:
             self.vida -= 8
-            print("💧 Você está extremamente desidratado!")
+            print(" Você está extremamente desidratado!")
 
         if self.sono == 0:
             self.vida -= 3
-            print("😴 Você está completamente exausto!")
+            print(" Você está completamente exausto!")
 
         if self.vida <= 0:
             self.vida = 0
 
 
-    # =========================
     # COMER
-    # =========================
 
     def comer(self):
 
@@ -119,7 +107,7 @@ class Jogador:
 
         self.fome = min(MAX_FOME, self.fome + recupera)
 
-        print(f"\n🍖 Você comeu carne.")
+        print(f"\n Você comeu carne.")
         print(f"Fome +{recupera}")
 
         self.passar_tempo(1)
@@ -132,7 +120,7 @@ class Jogador:
     def beber(self):
 
         if self.inventario["agua"] <= 0:
-            print("\n💧 Você não possui água.")
+            print("\n Você não possui água.")
             return
 
         self.inventario["agua"] -= 1
@@ -141,19 +129,17 @@ class Jogador:
 
         self.sede = min(MAX_SEDE, self.sede + recupera)
 
-        print(f"\n💧 Você bebeu água.")
+        print(f"\n Você bebeu água.")
         print(f"Sede +{recupera}")
 
         self.passar_tempo(1)
 
 
-    # =========================
     # DORMIR
-    # =========================
 
     def dormir(self):
 
-        print("\n😴 Você se deitou para dormir...")
+        print("\n Você se deitou para dormir...")
 
         horas = random.randint(5, 8)
 
@@ -164,16 +150,13 @@ class Jogador:
         self.sono = min(MAX_SONO, self.sono + recupera)
 
         print(f"Você dormiu por {horas} horas.")
-        print(f"😴 Sono +{recupera}")
+        print(f" Sono +{recupera}")
 
-
-    # =========================
     # CAÇAR
-    # =========================
 
     def cacar(self):
 
-        print("\n🏹 Você entrou na floresta procurando animais...")
+        print("\n Você entrou na floresta procurando animais...")
 
         self.passar_tempo(2)
 
@@ -185,24 +168,22 @@ class Jogador:
 
             self.inventario["carne"] += carne
 
-            print(f"🏹 Você conseguiu caçar um animal!")
-            print(f"🍖 Carne obtida: {carne}")
+            print(f" Você conseguiu caçar um animal!")
+            print(f" Carne obtida: {carne}")
 
         else:
 
-            print("❌ Você não encontrou nenhum animal.")
+            print(" Você não encontrou nenhum animal.")
 
             if random.randint(1, 100) <= 30:
                 self.encontro_inimigo()
 
 
-    # =========================
     # COLETAR RECURSOS
-    # =========================
 
     def coletar(self):
 
-        print("\n🌲 Você está procurando recursos...")
+        print("\n Você está procurando recursos...")
 
         self.passar_tempo(1)
 
@@ -212,17 +193,15 @@ class Jogador:
         self.inventario["madeira"] += madeira
         self.inventario["pedra"] += pedra
 
-        print(f"🪵 Madeira encontrada: {madeira}")
-        print(f"🪨 Pedra encontrada: {pedra}")
+        print(f" Madeira encontrada: {madeira}")
+        print(f" Pedra encontrada: {pedra}")
 
 
-    # =========================
     # EXPLORAR
-    # =========================
 
     def explorar(self):
 
-        print("\n🗺️ Você começou a explorar a região...")
+        print("\n Você começou a explorar a região...")
 
         self.passar_tempo(2)
 
@@ -230,7 +209,7 @@ class Jogador:
 
         if evento <= 25:
 
-            print("\n💧 Você encontrou uma fonte de água!")
+            print("\n Você encontrou uma fonte de água!")
 
             quantidade = random.randint(1, 3)
 
@@ -240,7 +219,7 @@ class Jogador:
 
         elif evento <= 45:
 
-            print("\n🎁 Você encontrou uma mochila abandonada!")
+            print("\n Você encontrou uma mochila abandonada!")
 
             comida = random.randint(1, 2)
             agua = random.randint(1, 2)
@@ -248,8 +227,8 @@ class Jogador:
             self.inventario["carne"] += comida
             self.inventario["agua"] += agua
 
-            print(f"🍖 Carne: +{comida}")
-            print(f"💧 Água: +{agua}")
+            print(f" Carne: +{comida}")
+            print(f" Água: +{agua}")
 
         elif evento <= 65:
 
@@ -257,13 +236,11 @@ class Jogador:
 
         else:
 
-            print("\n🌲 Nada aconteceu.")
+            print("\n Nada aconteceu.")
             print("A floresta permaneceu silenciosa...")
 
 
-    # =========================
     # INIMIGO
-    # =========================
 
     def encontro_inimigo(self):
 
@@ -275,7 +252,7 @@ class Jogador:
 
         nome, vida_inimigo, dano = random.choice(inimigos)
 
-        print(f"\n⚠️ Um {nome} apareceu!")
+        print(f"\n Um {nome} apareceu!")
 
         while vida_inimigo > 0 and self.vida > 0:
 
@@ -291,18 +268,18 @@ class Jogador:
                 vida_inimigo -= dano_player
 
                 print(
-                    f"⚔️ Você atacou o {nome} "
+                    f" Você atacou o {nome} "
                     f"causando {dano_player} de dano."
                 )
 
                 if vida_inimigo <= 0:
-                    print(f"☠️ Você matou o {nome}!")
+                    print(f" Você matou o {nome}!")
 
                     carne = random.randint(1, 4)
 
                     self.inventario["carne"] += carne
 
-                    print(f"🍖 Você conseguiu {carne} carne(s).")
+                    print(f" Você conseguiu {carne} carne(s).")
                     break
 
                 dano_recebido = random.randint(
@@ -313,7 +290,7 @@ class Jogador:
                 self.vida -= dano_recebido
 
                 print(
-                    f"💥 O {nome} atacou você "
+                    f" O {nome} atacou você "
                     f"causando {dano_recebido} de dano."
                 )
 
@@ -322,7 +299,7 @@ class Jogador:
                 chance = random.randint(1, 100)
 
                 if chance <= 60:
-                    print("🏃 Você conseguiu fugir!")
+                    print(" Você conseguiu fugir!")
                     break
 
                 else:
@@ -335,11 +312,11 @@ class Jogador:
                     self.vida -= dano_recebido
 
                     print(
-                        f"❌ Você não conseguiu fugir!"
+                        f" Você não conseguiu fugir!"
                     )
 
                     print(
-                        f"💥 O {nome} causou "
+                        f" O {nome} causou "
                         f"{dano_recebido} de dano."
                     )
 
@@ -349,9 +326,7 @@ class Jogador:
         self.passar_tempo(1)
 
 
-# =========================
 # JOGO
-# =========================
 
 def jogo():
 
@@ -371,14 +346,14 @@ def jogo():
 
         print("\nO que você deseja fazer?")
 
-        print("1 - 🏹 Caçar")
-        print("2 - 💧 Beber água")
-        print("3 - 🍖 Comer")
-        print("4 - 😴 Dormir")
-        print("5 - 🌲 Coletar recursos")
-        print("6 - 🗺️ Explorar")
-        print("7 - ⏳ Esperar")
-        print("8 - ❌ Sair")
+        print("1 -  Caçar")
+        print("2 -  Beber água")
+        print("3 -  Comer")
+        print("4 -  Dormir")
+        print("5 -  Coletar recursos")
+        print("6 -  Explorar")
+        print("7 -  Esperar")
+        print("8 -  Sair")
 
         escolha = input("\n> ")
 
@@ -402,7 +377,7 @@ def jogo():
 
         elif escolha == "7":
 
-            print("\n⏳ Você esperou uma hora...")
+            print("\n Você esperou uma hora...")
             jogador.passar_tempo(1)
 
         elif escolha == "8":
@@ -411,12 +386,12 @@ def jogo():
             break
 
         else:
-            print("\n❌ Opção inválida.")
+            print("\n Opção inválida.")
 
         if jogador.vida <= 0:
 
             print("\n" + "=" * 40)
-            print("☠️ VOCÊ MORREU")
+            print(" VOCÊ MORREU")
             print("=" * 40)
 
             print(f"Você sobreviveu até o dia {jogador.dia}.")
@@ -424,9 +399,7 @@ def jogo():
             break
 
 
-# =========================
-# INICIAR
-# =========================
+# INICIARSS
 
 if __name__ == "__main__":
     jogo()
